@@ -1,0 +1,42 @@
+## ENABLE AUTOSCALER
+
+PS E:\IT> cd .\Udacity\Sre\sre-project-03\
+PS E:\IT\Udacity\Sre\sre-project-03> eksctl utils associate-iam-oidc-provider --cluster udacity-cluster --approve --region=us-east-2
+2024-05-12 17:37:19 [ℹ]  will create IAM Open ID Connect provider for cluster "udacity-cluster" in "us-east-2"
+2024-05-12 17:37:20 [✔]  created IAM Open ID Connect provider for cluster "udacity-cluster" in "us-east-2"
+PS E:\IT\Udacity\Sre\sre-project-03> eksctl create iamserviceaccount --name cluster-autoscaler --namespace kube-system --cluster udacity-cluster --attach-policy-arn "arn:aws:iam::267173203222:policy/udacity-k8s-autoscale" --approve --override-existing-serviceaccounts --region=us-east-2
+2024-05-12 17:38:33 [ℹ]  1 iamserviceaccount (kube-system/cluster-autoscaler) was included (based on the include/exclude rules)
+2024-05-12 17:38:33 [!]  metadata of serviceaccounts that exist in Kubernetes will be updated, as --override-existing-serviceaccounts was set
+2024-05-12 17:38:33 [ℹ]  1 task: {
+    2 sequential sub-tasks: {
+        create IAM role for serviceaccount "kube-system/cluster-autoscaler",
+        create serviceaccount "kube-system/cluster-autoscaler",
+    } }2024-05-12 17:38:33 [ℹ]  building iamserviceaccount stack "eksctl-udacity-cluster-addon-iamserviceaccount-kube-system-cluster-autoscaler"
+2024-05-12 17:38:33 [ℹ]  deploying stack "eksctl-udacity-cluster-addon-iamserviceaccount-kube-system-cluster-autoscaler"
+2024-05-12 17:38:34 [ℹ]  waiting for CloudFormation stack "eksctl-udacity-cluster-addon-iamserviceaccount-kube-system-cluster-autoscaler"
+2024-05-12 17:39:05 [ℹ]  waiting for CloudFormation stack "eksctl-udacity-cluster-addon-iamserviceaccount-kube-system-cluster-autoscaler"
+2024-05-12 17:39:07 [ℹ]  created serviceaccount "kube-system/cluster-autoscaler"
+PS E:\IT\Udacity\Sre\sre-project-03> kubectl get sa cluster-autoscaler -n kube-system
+NAME                 SECRETS   AGE
+cluster-autoscaler   1         41s
+
+## INCREASE EKS MAX NODE - UPDATE eks.tf AND DEPLOY INFRA AGAIN
+  nodes_desired_size = 2
+  nodes_max_size     = 4
+  nodes_min_size     = 1
+
+## CREATE CLUSTER AUTOSCALE YML
+ 
+PS E:\IT\Udacity\Sre\sre-project-03>  kubectl apply -f .\starter\apps\cluster_autoscale.yml
+error: the path "app/cluster_autoscale.yml" does not exist
+PS E:\IT\Udacity\Sre\sre-project-03> kubectl apply -f .\starter\apps\cluster_autoscale.yml
+clusterrole.rbac.authorization.k8s.io/cluster-autoscaler created
+role.rbac.authorization.k8s.io/cluster-autoscaler created
+clusterrolebinding.rbac.authorization.k8s.io/cluster-autoscaler created
+rolebinding.rbac.authorization.k8s.io/cluster-autoscaler created
+deployment.apps/cluster-autoscaler created
+
+## DEPLOY bloatware.yml again
+
+PS E:\IT\Udacity\Sre\sre-project-03> kubectl apply -f starter/apps/bloatware/bloatware.yml
+deployment.apps/bloaty-mcbloatface created

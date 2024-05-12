@@ -1,0 +1,19 @@
+PS E:\IT\Udacity\Sre\sre-project-03> kubectl get pods --all-namespaces
+NAMESPACE     NAME                          READY   STATUS        RESTARTS      AGE
+kube-system   aws-node-7nbmn                2/2     Running       0             59m
+kube-system   aws-node-wqd6c                2/2     Running       0             58m
+kube-system   coredns-54f6fdf5d7-4s2wl      1/1     Running       0             61m
+kube-system   coredns-54f6fdf5d7-c67gx      1/1     Running       0             61m
+kube-system   kube-proxy-4tgbs              1/1     Running       0             59m
+kube-system   kube-proxy-kn6r2              1/1     Running       0             58m
+udacity       blue-6b6b7cf74d-c6dxc         1/1     Running       0             45m
+udacity       blue-6b6b7cf74d-qk2hn         1/1     Running       0             45m
+udacity       blue-6b6b7cf74d-zcq6v         1/1     Running       0             45m
+udacity       canary-v1-84676f5bb7-89qwx    1/1     Running       0             3m57s
+udacity       canary-v1-84676f5bb7-dcnh7    1/1     Running       0             16m
+udacity       canary-v1-84676f5bb7-m8pql    1/1     Running       0             3m57s
+udacity       canary-v2-7b4d74dcb9-9mzl6    1/1     Running       0             7m40s
+udacity       canary-v2-7b4d74dcb9-gn5j6    1/1     Running       0             5m23s
+udacity       canary-v2-7b4d74dcb9-jb75p    1/1     Running       0             15m
+udacity       debug                         1/1     Terminating   1 (21s ago)   115s
+udacity       hello-world-c57f59b87-jmgz2   1/1     Running       0             35m

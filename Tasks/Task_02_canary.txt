@@ -1,0 +1,163 @@
+PS E:\IT\Udacity\Sre\sre-project-03> kubectl get pods --all-namespaces
+NAMESPACE     NAME                          READY   STATUS    RESTARTS   AGE
+kube-system   aws-node-7nbmn                2/2     Running   0          51m
+kube-system   aws-node-wqd6c                2/2     Running   0          51m
+kube-system   coredns-54f6fdf5d7-4s2wl      1/1     Running   0          54m
+kube-system   coredns-54f6fdf5d7-c67gx      1/1     Running   0          54m
+kube-system   kube-proxy-4tgbs              1/1     Running   0          51m
+kube-system   kube-proxy-kn6r2              1/1     Running   0          51m
+udacity       blue-6b6b7cf74d-c6dxc         1/1     Running   0          38m
+udacity       blue-6b6b7cf74d-qk2hn         1/1     Running   0          38m
+udacity       blue-6b6b7cf74d-zcq6v         1/1     Running   0          38m
+udacity       canary-v1-84676f5bb7-dcnh7    1/1     Running   0          9m23s
+udacity       canary-v2-7b4d74dcb9-9mzl6    1/1     Running   0          19s
+udacity       canary-v2-7b4d74dcb9-jb75p    1/1     Running   0          8m14s
+udacity       canary-v2-7b4d74dcb9-rnwvh    1/1     Running   0          38s
+udacity       debug                         1/1     Running   0          2m28s
+udacity       hello-world-c57f59b87-jmgz2   1/1     Running   0          28m
+PS E:\IT\Udacity\Sre\sre-project-03> kubectl get deployments.apps
+NAME          READY   UP-TO-DATE   AVAILABLE   AGE
+blue          3/3     3            3           38m
+canary-v1     1/1     1            1           38m
+canary-v2     3/3     3            3           18m
+hello-world   1/1     1            1           38m
+PS E:\IT\Udacity\Sre\sre-project-03> kubectl get svc
+NAME          TYPE           CLUSTER-IP      EXTERNAL-IP                                                                     PORT(S)        AGE
+hello-world   LoadBalancer   172.20.11.215   a3f9849ea64b84ba0a1c9b0d46c64730-1d1559fc69443924.elb.us-east-2.amazonaws.com   80:30771/TCP   38m
+PS E:\IT\Udacity\Sre\sre-project-03> kubectl get pods --all-namespaces
+NAMESPACE     NAME                          READY   STATUS    RESTARTS   AGE
+kube-system   aws-node-7nbmn                2/2     Running   0          53m
+kube-system   aws-node-wqd6c                2/2     Running   0          53m
+kube-system   coredns-54f6fdf5d7-4s2wl      1/1     Running   0          55m
+kube-system   coredns-54f6fdf5d7-c67gx      1/1     Running   0          55m
+kube-system   kube-proxy-4tgbs              1/1     Running   0          53m
+kube-system   kube-proxy-kn6r2              1/1     Running   0          53m
+udacity       blue-6b6b7cf74d-c6dxc         1/1     Running   0          39m
+udacity       blue-6b6b7cf74d-qk2hn         1/1     Running   0          39m
+udacity       blue-6b6b7cf74d-zcq6v         1/1     Running   0          39m
+udacity       canary-v1-84676f5bb7-dcnh7    1/1     Running   0          10m
+udacity       canary-v2-7b4d74dcb9-9mzl6    1/1     Running   0          107s
+udacity       canary-v2-7b4d74dcb9-jb75p    1/1     Running   0          9m42s
+udacity       canary-v2-7b4d74dcb9-rnwvh    1/1     Running   0          2m6s
+udacity       debug                         1/1     Running   0          3m56s
+udacity       hello-world-c57f59b87-jmgz2   1/1     Running   0          29m
+PS E:\IT\Udacity\Sre\sre-project-03> kubectl delete pod canary-v2-7b4d74dcb9-rnwvh -n udacity
+pod "canary-v2-7b4d74dcb9-rnwvh" deleted
+PS E:\IT\Udacity\Sre\sre-project-03> kubectl get pods --all-namespaces
+NAMESPACE     NAME                          READY   STATUS    RESTARTS   AGE
+kube-system   aws-node-7nbmn                2/2     Running   0          53m
+kube-system   aws-node-wqd6c                2/2     Running   0          53m
+kube-system   coredns-54f6fdf5d7-4s2wl      1/1     Running   0          56m
+kube-system   coredns-54f6fdf5d7-c67gx      1/1     Running   0          56m
+kube-system   kube-proxy-4tgbs              1/1     Running   0          53m
+kube-system   kube-proxy-kn6r2              1/1     Running   0          53m
+udacity       blue-6b6b7cf74d-c6dxc         1/1     Running   0          40m
+udacity       blue-6b6b7cf74d-qk2hn         1/1     Running   0          40m
+udacity       blue-6b6b7cf74d-zcq6v         1/1     Running   0          40m
+udacity       canary-v1-84676f5bb7-dcnh7    1/1     Running   0          11m
+udacity       canary-v2-7b4d74dcb9-9mzl6    1/1     Running   0          2m22s
+udacity       canary-v2-7b4d74dcb9-gn5j6    1/1     Running   0          5s
+udacity       canary-v2-7b4d74dcb9-jb75p    1/1     Running   0          10m
+udacity       debug                         1/1     Running   0          4m31s
+udacity       hello-world-c57f59b87-jmgz2   1/1     Running   0          30m
+PS E:\IT\Udacity\Sre\sre-project-03> kubectl apply -f starter/apps/canary/index_v1_html.yml
+configmap/canary-config-v1 unchanged
+PS E:\IT\Udacity\Sre\sre-project-03> kubectl apply -f starter/apps/canary/canary-v1.yml
+deployment.apps/canary-v1 configured
+PS E:\IT\Udacity\Sre\sre-project-03> kubectl get pods --all-namespaces
+NAMESPACE     NAME                          READY   STATUS    RESTARTS   AGE
+kube-system   aws-node-7nbmn                2/2     Running   0          55m
+kube-system   aws-node-wqd6c                2/2     Running   0          55m
+kube-system   coredns-54f6fdf5d7-4s2wl      1/1     Running   0          57m
+kube-system   coredns-54f6fdf5d7-c67gx      1/1     Running   0          57m
+kube-system   kube-proxy-4tgbs              1/1     Running   0          55m
+kube-system   kube-proxy-kn6r2              1/1     Running   0          55m
+udacity       blue-6b6b7cf74d-c6dxc         1/1     Running   0          41m
+udacity       blue-6b6b7cf74d-qk2hn         1/1     Running   0          41m
+udacity       blue-6b6b7cf74d-zcq6v         1/1     Running   0          41m
+udacity       canary-v1-84676f5bb7-89qwx    1/1     Running   0          4s
+udacity       canary-v1-84676f5bb7-dcnh7    1/1     Running   0          12m
+udacity       canary-v1-84676f5bb7-m8pql    1/1     Running   0          4s
+udacity       canary-v2-7b4d74dcb9-9mzl6    1/1     Running   0          3m47s
+udacity       canary-v2-7b4d74dcb9-gn5j6    1/1     Running   0          90s
+udacity       canary-v2-7b4d74dcb9-jb75p    1/1     Running   0          11m
+udacity       debug                         1/1     Running   0          5m56s
+udacity       hello-world-c57f59b87-jmgz2   1/1     Running   0          31m
+PS E:\IT\Udacity\Sre\sre-project-03> kubectl delete pod debug -n udacity
+pod "debug" deleted
+PS E:\IT\Udacity\Sre\sre-project-03> kubectl apply -f starter/apps/canary/canary-svc.yml
+service/canary-svc created
+PS E:\IT\Udacity\Sre\sre-project-03> kubectl get pods --all-namespaces
+NAMESPACE     NAME                          READY   STATUS    RESTARTS   AGE
+kube-system   aws-node-7nbmn                2/2     Running   0          56m
+kube-system   aws-node-wqd6c                2/2     Running   0          56m
+kube-system   coredns-54f6fdf5d7-4s2wl      1/1     Running   0          58m
+kube-system   coredns-54f6fdf5d7-c67gx      1/1     Running   0          58m
+kube-system   kube-proxy-4tgbs              1/1     Running   0          56m
+kube-system   kube-proxy-kn6r2              1/1     Running   0          56m
+udacity       blue-6b6b7cf74d-c6dxc         1/1     Running   0          42m
+udacity       blue-6b6b7cf74d-qk2hn         1/1     Running   0          42m
+udacity       blue-6b6b7cf74d-zcq6v         1/1     Running   0          42m
+udacity       canary-v1-84676f5bb7-89qwx    1/1     Running   0          88s
+udacity       canary-v1-84676f5bb7-dcnh7    1/1     Running   0          14m
+udacity       canary-v1-84676f5bb7-m8pql    1/1     Running   0          88s
+udacity       canary-v2-7b4d74dcb9-9mzl6    1/1     Running   0          5m11s
+udacity       canary-v2-7b4d74dcb9-gn5j6    1/1     Running   0          2m54s
+udacity       canary-v2-7b4d74dcb9-jb75p    1/1     Running   0          13m
+udacity       hello-world-c57f59b87-jmgz2   1/1     Running   0          32m
+PS E:\IT\Udacity\Sre\sre-project-03> kubectl get svc
+NAME          TYPE           CLUSTER-IP      EXTERNAL-IP                                                                     PORT(S)        AGE
+canary-svc    ClusterIP      172.20.5.1      <none>                                                                          80/TCP         24s
+hello-world   LoadBalancer   172.20.11.215   a3f9849ea64b84ba0a1c9b0d46c64730-1d1559fc69443924.elb.us-east-2.amazonaws.com   80:30771/TCP   43m
+PS E:\IT\Udacity\Sre\sre-project-03> kubectl get deployments.apps
+NAME          READY   UP-TO-DATE   AVAILABLE   AGE
+blue          3/3     3            3           43m
+canary-v1     3/3     3            3           43m
+canary-v2     3/3     3            3           23m
+hello-world   1/1     1            1           43m
+PS E:\IT\Udacity\Sre\sre-project-03> kubectl run debug --rm -i --tty --image nicolaka/netshoot -- /bin/bash
+If you don't see a command prompt, try pressing enter.
+debug:~# curl 172.20.5.1
+<html>
+<h1>This is version 1</h1>
+</html>
+debug:~# curl 172.20.5.1
+<html>
+<h1>This is version 1</h1>
+</html>
+debug:~# curl 172.20.5.1
+<html>
+<h1>This is version 2</h1>
+</html>
+debug:~# curl 172.20.5.1
+<html>
+<h1>This is version 1</h1>
+</html>
+debug:~# curl 172.20.5.1
+<html>
+<h1>This is version 2</h1>
+</html>
+debug:~# curl 172.20.5.1
+<html>
+<h1>This is version 2</h1>
+</html>
+debug:~# curl 172.20.5.1
+<html>
+<h1>This is version 1</h1>
+</html>
+debug:~# curl 172.20.5.1
+<html>
+<h1>This is version 2</h1>
+</html>
+debug:~# curl 172.20.5.1
+<html>
+<h1>This is version 1</h1>
+</html>
+debug:~# curl 172.20.5.1
+<html>
+<h1>This is version 2</h1>
+</html>
+debug:~# exit
+exit
+Session ended, resume using 'kubectl attach debug -c debug -i -t' command when the pod is running
+pod "debug" deleted
